@@ -202,13 +202,15 @@ const N_SLOTS = 3;
   })();
 })();
 
-/* ========= BUSCADOR (iTunes Search API, JSONP) ========= */
-let jsonpId = 0;
-function itunes(term) {
+/* ========= BUSCADOR =========
+   1º JSONP directo a iTunes (rápido en escritorio). Si falla (iOS, WhatsApp, Instagram…),
+   2º buscador propio en Netlify (/api/search: iTunes desde servidor + Deezer de respaldo). */
+let jsonpId = 0, directOk = true;
+function itunesJsonp(term) {
   return new Promise((resolve, reject) => {
     const cb = '__it' + (++jsonpId);
     const s = document.createElement('script');
-    const t = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 8000);
+    const t = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 3500);
     function cleanup(){ clearTimeout(t); delete window[cb]; s.remove(); }
     window[cb] = d => { cleanup(); resolve(d.results || []); };
     s.onerror = () => { cleanup(); reject(new Error('net')); };
@@ -216,6 +218,18 @@ function itunes(term) {
             encodeURIComponent(term) + '&callback=' + cb;
     document.head.appendChild(s);
   });
+}
+async function viaServer(term) {
+  const r = await fetch('/api/search?term=' + encodeURIComponent(term));
+  if (!r.ok) throw new Error('srv ' + r.status);
+  return (await r.json()).results || [];
+}
+async function itunes(term) {
+  if (directOk) {
+    try { const r = await itunesJsonp(term); if (r.length) return r; }
+    catch { directOk = false; }   // a partir de aquí, siempre por el servidor
+  }
+  return viaServer(term);
 }
 
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -294,7 +308,7 @@ function wireSearch(el, i) {
         active = -1; paint();
       } catch { items = []; box.innerHTML = '<div class="empty">Sin conexión con el buscador, vuelve a intentarlo</div>'; box.classList.add('open'); }
       finally { el.classList.remove('loading'); }
-    }, 300);
+    }, 400);
   });
   inp.addEventListener('keydown', e => {
     if (!box.classList.contains('open') || !items.length) return;
