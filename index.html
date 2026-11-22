@@ -310,7 +310,7 @@ nombreEl.addEventListener('input', check);
 function check(){
   const n = picks.filter(Boolean).length;
   btn.disabled = !(nombreEl.value.trim() && n === N_SLOTS);
-  btn.textContent = n === N_SLOTS ? 'Meter en la playlist 🎶' : `Elige ${N_SLOTS - n} canción${N_SLOTS - n === 1 ? '' : 'es'} más`;
+  btn.textContent = n === N_SLOTS ? 'Meter en la playlist 🎶' : `Elige ${N_SLOTS - n} ${N_SLOTS - n === 1 ? 'canción' : 'canciones'} más`;
   if (!nombreEl.value.trim() && n === N_SLOTS) btn.textContent = 'Pon tu nombre ☝️';
 }
 check();
