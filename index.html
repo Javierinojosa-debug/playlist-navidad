@@ -6,7 +6,7 @@
 <title>🎄 La Playlist de Navidad · Amigos 2026</title>
 <meta name="description" content="Elige tus 3 canciones favoritas para la playlist de la fiesta de Navidad.">
 <meta property="og:title" content="🎄 La Playlist de Navidad · Amigos 2026">
-<meta property="og:description" content="Mete tus 3 canciones favoritas. La lista es sorpresa hasta la fiesta 🤫">
+<meta property="og:description" content="Mete tus 3 canciones favoritas. Participa y escucha la lista de la fiesta en Spotify 🎧">
 <meta name="theme-color" content="#0d1f17">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎄</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,6 +82,7 @@
   .btn:active{transform:scale(.98)}
   .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
   .btn.ghost{background:transparent;border:1.5px solid var(--line);box-shadow:none;color:var(--cream)}
+  .btn.spotify{display:flex;align-items:center;justify-content:center;gap:10px;text-decoration:none;background:#1ed760;color:#06260f;box-shadow:0 10px 24px rgba(30,215,96,.3)}
   .err{color:#ff8a8a;font-size:.9rem;margin-top:10px;min-height:1em;text-align:center}
 
   .thanks{text-align:center;display:none}
@@ -127,7 +128,7 @@
     <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <h1>La Playlist<br>de <em>Navidad</em> 🎄</h1>
     <p class="sub">Elige tus <b>3 canciones favoritas</b> y entrarán en la lista de Spotify de la fiesta. Puedes volver a participar cuando quieras.</p>
-    <div class="pill">🤫 La lista es sorpresa hasta la fiesta</div>
+    <div class="pill">🎧 Participa y desbloquea la lista de Spotify</div>
   </header>
 
   <!-- FORMULARIO -->
@@ -156,8 +157,13 @@
   <section class="card thanks" id="thanksCard">
     <div class="big">🎁</div>
     <h2>¡Hecho, <span id="thxName"></span>!</h2>
-    <p class="hint">Tus canciones ya están en la lista. Nos vemos en la pista.</p>
-    <button class="btn ghost" id="otra">Añadir otras 3 canciones</button>
+    <p class="hint">Tus canciones ya están en camino a la lista (se añaden a Spotify cada noche). Nos vemos en la pista.</p>
+    <a class="btn spotify" href="https://open.spotify.com/playlist/7f2V1cM1JJiFCNuKBpagvb" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M12 0a12 12 0 1 0 0 24 12 12 0 0 0 0-24zm5.5 17.3a.75.75 0 0 1-1 .25c-2.85-1.74-6.45-2.14-10.68-1.17a.75.75 0 1 1-.34-1.46c4.63-1.06 8.6-.6 11.77 1.34.36.22.47.68.25 1.04zm1.47-3.27a.94.94 0 0 1-1.29.31c-3.26-2-8.24-2.58-12.1-1.41a.94.94 0 1 1-.55-1.8c4.41-1.34 9.9-.69 13.63 1.6.44.27.58.85.31 1.3zm.13-3.4C15.2 8.3 8.77 8.1 5.05 9.22a1.12 1.12 0 1 1-.65-2.15c4.27-1.3 11.37-1.04 15.85 1.62a1.12 1.12 0 1 1-1.15 1.93z"/></svg>
+      Escuchar la lista en Spotify
+    </a>
+    <p class="hint" style="margin:10px 0 0;font-size:.85rem">Dale a ＋ (seguir) para tenerla en tu biblioteca e ir escuchándola según se llena.</p>
+    <button class="btn ghost" id="otra" style="margin-top:18px">Añadir otras 3 canciones</button>
   </section>
 
   <!-- ESTADÍSTICAS -->
@@ -167,7 +173,7 @@
       <small style="color:var(--muted)" id="upd"></small>
     </div>
     <div id="stats"><div class="nodata">Cargando…</div></div>
-    <div class="secret">🔒 Las canciones no se enseñan: solo las verás en la fiesta.</div>
+    <div class="secret">🔒 Aquí no se enseñan las canciones de nadie: participa y desbloquea la lista en Spotify.</div>
   </section>
 
   <footer>Hecho con 🎄 para la fiesta de Navidad de los amigos · 2026</footer>
