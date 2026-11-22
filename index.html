@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>🎄 La Playlist de Navidad · Amigos 2026</title>
+<meta name="description" content="Elige tus 3 canciones favoritas para la playlist de la fiesta de Navidad.">
+<meta property="og:title" content="🎄 La Playlist de Navidad · Amigos 2026">
+<meta property="og:description" content="Mete tus 3 canciones favoritas. La lista es sorpresa hasta la fiesta 🤫">
+<meta name="theme-color" content="#0d1f17">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎄</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0d1f17; --bg2:#13291f; --card:#163024; --line:#24473a;
+    --red:#d7263d; --red2:#a4161a; --gold:#f2c14e; --cream:#fbf5e9;
+    --muted:#a9bfb3; --green:#2fbf71;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    font-family:Inter,system-ui,-apple-system,sans-serif; color:var(--cream);
+    background:radial-gradient(1200px 600px at 50% -10%, #1f4a36 0%, var(--bg) 60%) fixed, var(--bg);
+    min-height:100vh; overflow-x:hidden;
+  }
+  #snow{position:fixed;inset:0;pointer-events:none;z-index:0}
+  .wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:28px 18px 80px}
+  header{text-align:center;padding:24px 0 8px}
+  .lights{display:flex;justify-content:center;gap:14px;margin-bottom:18px}
+  .lights span{width:12px;height:12px;border-radius:50%;animation:blink 1.6s infinite}
+  .lights span:nth-child(4n+1){background:var(--red);color:var(--red)}
+  .lights span:nth-child(4n+2){background:var(--gold);color:var(--gold);animation-delay:.4s}
+  .lights span:nth-child(4n+3){background:var(--green);color:var(--green);animation-delay:.8s}
+  .lights span:nth-child(4n+4){background:#5fa8ff;color:#5fa8ff;animation-delay:1.2s}
+  @keyframes blink{0%,100%{opacity:1;box-shadow:0 0 12px 2px currentColor}50%{opacity:.35;box-shadow:none}}
+  h1{font-family:Fraunces,serif;font-weight:800;font-size:clamp(2.1rem,8vw,3.4rem);line-height:1.02;margin:0;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--gold)}
+  .sub{color:var(--muted);font-size:1.05rem;margin:14px auto 0;max-width:460px;line-height:1.5}
+  .pill{display:inline-flex;align-items:center;gap:8px;background:rgba(242,193,78,.12);border:1px solid rgba(242,193,78,.35);color:var(--gold);padding:6px 12px;border-radius:99px;font-size:.85rem;font-weight:600;margin-top:16px}
+
+  .card{background:linear-gradient(180deg,var(--card),var(--bg2));border:1px solid var(--line);border-radius:22px;padding:22px;margin-top:26px;box-shadow:0 20px 50px rgba(0,0,0,.35)}
+  .card h2{font-family:Fraunces,serif;font-size:1.45rem;margin:0 0 4px}
+  .card p.hint{margin:0 0 18px;color:var(--muted);font-size:.93rem}
+  label.lbl{display:block;font-weight:600;font-size:.9rem;margin:0 0 8px}
+  input[type=text],textarea{width:100%;background:#0e2219;border:1.5px solid var(--line);color:var(--cream);border-radius:14px;padding:14px 15px;font:inherit;font-size:1rem;outline:none;transition:border-color .15s}
+  input[type=text]:focus,textarea:focus{border-color:var(--gold)}
+  input::placeholder,textarea::placeholder{color:#6f8c7e}
+  textarea{resize:vertical;min-height:64px}
+  .field{margin-bottom:18px}
+
+  .slot{position:relative;margin-bottom:14px}
+  .slot .num{position:absolute;left:14px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-weight:700;font-size:.85rem;display:grid;place-items:center;z-index:2}
+  .slot input{padding-left:50px}
+  .spinner{position:absolute;right:14px;top:50%;width:18px;height:18px;margin-top:-9px;border:2px solid var(--line);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite;display:none}
+  .slot.loading .spinner{display:block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  .results{position:absolute;left:0;right:0;top:calc(100% + 6px);background:#10261c;border:1px solid var(--line);border-radius:14px;overflow:hidden;z-index:20;box-shadow:0 18px 40px rgba(0,0,0,.5);display:none;max-height:340px;overflow-y:auto}
+  .results.open{display:block}
+  .res{display:flex;align-items:center;gap:12px;padding:10px 12px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.04)}
+  .res:hover,.res.active{background:#1b3a2c}
+  .res img{width:46px;height:46px;border-radius:8px;flex-shrink:0;background:#0b1a13}
+  .res .t{flex:1;min-width:0}
+  .res .t b{display:block;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .res .t small{color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .res .empty{padding:14px;color:var(--muted)}
+  .play{width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;color:var(--cream);cursor:pointer;flex-shrink:0;font-size:.8rem}
+  .play:hover{border-color:var(--gold);color:var(--gold)}
+
+  .chosen{display:flex;align-items:center;gap:12px;background:#0e2219;border:1.5px solid var(--green);border-radius:14px;padding:10px 12px 10px 50px;position:relative;animation:pop .25s ease}
+  .chosen img{width:52px;height:52px;border-radius:9px}
+  .chosen .t{flex:1;min-width:0}
+  .chosen .t b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .chosen .t small{color:var(--muted);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .x{background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:8px}
+  .x:hover{color:var(--red);background:rgba(215,38,61,.1)}
+  @keyframes pop{from{transform:scale(.97);opacity:.5}to{transform:none;opacity:1}}
+
+  .btn{width:100%;border:none;border-radius:16px;padding:17px;font:inherit;font-weight:700;font-size:1.08rem;cursor:pointer;color:#fff;background:linear-gradient(180deg,var(--red),var(--red2));box-shadow:0 10px 24px rgba(215,38,61,.35);transition:transform .1s,opacity .2s;margin-top:8px}
+  .btn:active{transform:scale(.98)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+  .btn.ghost{background:transparent;border:1.5px solid var(--line);box-shadow:none;color:var(--cream)}
+  .err{color:#ff8a8a;font-size:.9rem;margin-top:10px;min-height:1em;text-align:center}
+
+  .thanks{text-align:center;display:none}
+  .thanks .big{font-size:3.4rem;margin:4px 0}
+  .thanks h2{font-size:1.7rem}
+
+  .stats-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0 22px}
+  .kpi{background:#0e2219;border:1px solid var(--line);border-radius:16px;padding:14px 10px;text-align:center}
+  .kpi b{display:block;font-family:Fraunces,serif;font-size:1.9rem;color:var(--gold);line-height:1}
+  .kpi small{color:var(--muted);font-size:.78rem}
+  .block{margin-top:22px}
+  .block h3{font-size:1rem;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .bar{display:grid;grid-template-columns:28px 1fr auto;align-items:center;gap:10px;margin-bottom:9px}
+  .bar .pos{color:var(--muted);font-weight:700;font-size:.85rem;text-align:right}
+  .bar .track{position:relative;background:#0e2219;border-radius:10px;height:34px;overflow:hidden}
+  .bar .fill{position:absolute;inset:0 auto 0 0;border-radius:10px;width:0;transition:width .9s cubic-bezier(.2,.8,.2,1)}
+  .bar .name{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-weight:600;font-size:.92rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100% - 20px);text-shadow:0 1px 2px rgba(0,0,0,.5)}
+  .bar .n{font-weight:700;font-size:.9rem;min-width:22px;text-align:right}
+  .bar:nth-child(1) .fill{background:linear-gradient(90deg,var(--gold),#e0a526)}
+  .bar:nth-child(1) .name{color:#2a1c00;text-shadow:none}
+  .bar .fill{background:linear-gradient(90deg,#2a6a4c,#3d8a64)}
+  .stile .bar .fill{background:linear-gradient(90deg,#8e1b2b,var(--red))}
+  .stile .bar:nth-child(1) .fill{background:linear-gradient(90deg,var(--gold),#e0a526)}
+  .decades{display:flex;align-items:flex-end;gap:8px;height:150px;padding-top:10px}
+  .dec{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px}
+  .dec .col{width:100%;max-width:46px;border-radius:9px 9px 4px 4px;background:linear-gradient(180deg,#5fa8ff,#2a5ea8);height:0;transition:height .9s cubic-bezier(.2,.8,.2,1);position:relative}
+  .dec .col span{position:absolute;top:-20px;left:0;right:0;text-align:center;font-size:.8rem;font-weight:700}
+  .dec small{color:var(--muted);font-size:.8rem}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+  .fact{background:#0e2219;border:1px dashed var(--line);border-radius:14px;padding:12px 14px;font-size:.9rem;color:var(--muted)}
+  .fact b{color:var(--cream);display:block;font-size:1.15rem;margin-top:2px}
+  .nodata{color:var(--muted);text-align:center;padding:20px 0}
+  .secret{display:flex;gap:10px;align-items:center;background:rgba(215,38,61,.08);border:1px solid rgba(215,38,61,.3);border-radius:14px;padding:12px 14px;font-size:.88rem;color:#f3c1c7;margin-top:18px}
+  footer{text-align:center;color:#6f8c7e;font-size:.82rem;margin-top:34px}
+  @media (max-width:420px){.kpi b{font-size:1.55rem}.facts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<canvas id="snow"></canvas>
+<div class="wrap">
+  <header>
+    <div class="lights"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <h1>La Playlist<br>de <em>Navidad</em> 🎄</h1>
+    <p class="sub">Elige tus <b>3 canciones favoritas</b> y entrarán en la lista de Spotify de la fiesta. Puedes volver a participar cuando quieras.</p>
+    <div class="pill">🤫 La lista es sorpresa hasta la fiesta</div>
+  </header>
+
+  <!-- FORMULARIO -->
+  <section class="card" id="formCard">
+    <h2>Tus 3 temazos</h2>
+    <p class="hint">Escribe el título o el artista y elige la canción de la lista.</p>
+
+    <div class="field">
+      <label class="lbl" for="nombre">¿Quién eres?</label>
+      <input type="text" id="nombre" placeholder="Tu nombre" maxlength="60" autocomplete="given-name">
+    </div>
+
+    <label class="lbl">Tus canciones</label>
+    <div id="slots"></div>
+
+    <div class="field" style="margin-top:8px">
+      <label class="lbl" for="dedicatoria">Dedicatoria (opcional)</label>
+      <textarea id="dedicatoria" maxlength="200" placeholder="Para quien la quiera bailar conmigo 💃"></textarea>
+    </div>
+
+    <button class="btn" id="enviar" disabled>Meter en la playlist 🎶</button>
+    <div class="err" id="err"></div>
+  </section>
+
+  <!-- GRACIAS -->
+  <section class="card thanks" id="thanksCard">
+    <div class="big">🎁</div>
+    <h2>¡Hecho, <span id="thxName"></span>!</h2>
+    <p class="hint">Tus canciones ya están en la lista. Nos vemos en la pista.</p>
+    <button class="btn ghost" id="otra">Añadir otras 3 canciones</button>
+  </section>
+
+  <!-- ESTADÍSTICAS -->
+  <section class="card" id="statsCard">
+    <div class="stats-head">
+      <h2>Así va la playlist</h2>
+      <small style="color:var(--muted)" id="upd"></small>
+    </div>
+    <div id="stats"><div class="nodata">Cargando…</div></div>
+    <div class="secret">🔒 Las canciones no se enseñan: solo las verás en la fiesta.</div>
+  </section>
+
+  <footer>Hecho con 🎄 para la fiesta de Navidad de los amigos · 2026</footer>
+</div>
+
+<script>
+/* ========= CONFIG ========= */
+const API_URL = 'https://script.google.com/macros/s/AKfycbwhGPTmUeq2u1qIa7AshKaiW6c7eiCg-HaulHXRWsq4MprqVxXW06_Jcvpz8mR8PJ6AOQ/exec';   // URL /exec del Apps Script
+const N_SLOTS = 3;
+
+/* ========= NIEVE ========= */
+(() => {
+  const c = document.getElementById('snow'), x = c.getContext('2d');
+  let W, H, f = [];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){ W = c.width = innerWidth; H = c.height = innerHeight; }
+  size(); addEventListener('resize', size);
+  const n = reduce ? 0 : Math.min(90, Math.round(innerWidth / 12));
+  for (let i = 0; i < n; i++) f.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*2.2+.6, s: Math.random()*.6+.25, d: Math.random()*Math.PI*2 });
+  (function loop(){
+    x.clearRect(0,0,W,H); x.fillStyle = 'rgba(255,255,255,.75)';
+    f.forEach(p => { p.y += p.s; p.d += .01; p.x += Math.sin(p.d)*.3;
+      if (p.y > H) { p.y = -5; p.x = Math.random()*W; }
+      x.beginPath(); x.arc(p.x,p.y,p.r,0,Math.PI*2); x.fill(); });
+    requestAnimationFrame(loop);
+  })();
+})();
+
+/* ========= BUSCADOR (iTunes Search API, JSONP) ========= */
+let jsonpId = 0;
+function itunes(term) {
+  return new Promise((resolve, reject) => {
+    const cb = '__it' + (++jsonpId);
+    const s = document.createElement('script');
+    const t = setTimeout(() => { cleanup(); reject(new Error('timeout')); }, 8000);
+    function cleanup(){ clearTimeout(t); delete window[cb]; s.remove(); }
+    window[cb] = d => { cleanup(); resolve(d.results || []); };
+    s.onerror = () => { cleanup(); reject(new Error('net')); };
+    s.src = 'https://itunes.apple.com/search?media=music&entity=song&limit=8&country=ES&term=' +
+            encodeURIComponent(term) + '&callback=' + cb;
+    document.head.appendChild(s);
+  });
+}
+
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const art = (u, px) => (u || '').replace('100x100bb', px + 'x' + px + 'bb');
+
+const audio = new Audio(); let playingBtn = null;
+function togglePreview(url, btn) {
+  if (playingBtn === btn) { audio.pause(); btn.textContent = '▶'; playingBtn = null; return; }
+  if (playingBtn) playingBtn.textContent = '▶';
+  audio.src = url; audio.play().catch(()=>{}); btn.textContent = '❚❚'; playingBtn = btn;
+  audio.onended = () => { btn.textContent = '▶'; playingBtn = null; };
+}
+function stopPreview(){ audio.pause(); if (playingBtn) playingBtn.textContent = '▶'; playingBtn = null; }
+
+const picks = Array(N_SLOTS).fill(null);
+const slotsEl = document.getElementById('slots');
+
+function renderSlot(i) {
+  const old = document.getElementById('slot' + i);
+  const el = document.createElement('div');
+  el.className = 'slot'; el.id = 'slot' + i;
+  const p = picks[i];
+  if (p) {
+    el.innerHTML = `<span class="num">${i+1}</span>
+      <div class="chosen"><img src="${esc(art(p.artworkUrl100,120))}" alt="">
+      <div class="t"><b>${esc(p.trackName)}</b><small>${esc(p.artistName)}${p.releaseDate ? ' · ' + p.releaseDate.slice(0,4) : ''}</small></div>
+      <button class="x" aria-label="Quitar">✕</button></div>`;
+    el.querySelector('.x').onclick = () => { picks[i] = null; renderSlot(i); check(); el.isConnected && document.querySelector('#slot'+i+' input')?.focus(); };
+  } else {
+    el.innerHTML = `<span class="num">${i+1}</span>
+      <input type="text" placeholder="Canción ${i+1}: título o artista" autocomplete="off" aria-label="Canción ${i+1}">
+      <span class="spinner"></span><div class="results" role="listbox"></div>`;
+    wireSearch(el, i);
+  }
+  old ? old.replaceWith(el) : slotsEl.appendChild(el);
+}
+
+function wireSearch(el, i) {
+  const inp = el.querySelector('input'), box = el.querySelector('.results');
+  let timer, last = '', items = [], active = -1;
+  function close(){ box.classList.remove('open'); active = -1; }
+  function choose(k){
+    const r = items[k]; if (!r) return;
+    stopPreview(); picks[i] = r; renderSlot(i); check();
+    const next = picks.findIndex(x => !x);
+    if (next > -1) document.querySelector('#slot' + next + ' input')?.focus();
+  }
+  function paint(){
+    if (!items.length) { box.innerHTML = '<div class="empty">No encuentro nada… prueba con artista + título</div>'; box.classList.add('open'); return; }
+    box.innerHTML = items.map((r,k) => `<div class="res${k===active?' active':''}" data-k="${k}">
+      <img src="${esc(art(r.artworkUrl100,92))}" alt="" loading="lazy">
+      <div class="t"><b>${esc(r.trackName)}</b><small>${esc(r.artistName)}${r.releaseDate ? ' · ' + r.releaseDate.slice(0,4) : ''}${r.primaryGenreName ? ' · ' + esc(r.primaryGenreName) : ''}</small></div>
+      ${r.previewUrl ? `<button class="play" data-p="${esc(r.previewUrl)}" aria-label="Escuchar">▶</button>` : ''}
+    </div>`).join('');
+    box.classList.add('open');
+  }
+  box.addEventListener('mousedown', e => {
+    const pb = e.target.closest('.play');
+    if (pb) { e.preventDefault(); togglePreview(pb.dataset.p, pb); return; }
+    const row = e.target.closest('.res'); if (row) { e.preventDefault(); choose(+row.dataset.k); }
+  });
+  inp.addEventListener('input', () => {
+    clearTimeout(timer);
+    const q = inp.value.trim();
+    if (q.length < 2) { close(); return; }
+    timer = setTimeout(async () => {
+      if (q === last) return; last = q;
+      el.classList.add('loading');
+      try {
+        const res = await itunes(q);
+        if (inp.value.trim() !== q) return;
+        const seen = new Set();
+        items = res.filter(r => r.kind === 'song').filter(r => {
+          const k = (r.trackName + '|' + r.artistName).toLowerCase(); if (seen.has(k)) return false; seen.add(k); return true;
+        });
+        active = -1; paint();
+      } catch { items = []; box.innerHTML = '<div class="empty">Sin conexión con el buscador, vuelve a intentarlo</div>'; box.classList.add('open'); }
+      finally { el.classList.remove('loading'); }
+    }, 300);
+  });
+  inp.addEventListener('keydown', e => {
+    if (!box.classList.contains('open') || !items.length) return;
+    if (e.key === 'ArrowDown') { active = Math.min(items.length-1, active+1); paint(); e.preventDefault(); }
+    else if (e.key === 'ArrowUp') { active = Math.max(0, active-1); paint(); e.preventDefault(); }
+    else if (e.key === 'Enter') { choose(active < 0 ? 0 : active); e.preventDefault(); }
+    else if (e.key === 'Escape') close();
+  });
+  inp.addEventListener('blur', () => setTimeout(close, 150));
+  inp.addEventListener('focus', () => { if (items.length && inp.value.trim().length >= 2) paint(); });
+}
+
+for (let i = 0; i < N_SLOTS; i++) renderSlot(i);
+
+/* ========= ENVÍO ========= */
+const nombreEl = document.getElementById('nombre'), btn = document.getElementById('enviar'), errEl = document.getElementById('err');
+try { nombreEl.value = localStorage.getItem('pn_nombre') || ''; } catch {}
+nombreEl.addEventListener('input', check);
+function check(){
+  const n = picks.filter(Boolean).length;
+  btn.disabled = !(nombreEl.value.trim() && n === N_SLOTS);
+  btn.textContent = n === N_SLOTS ? 'Meter en la playlist 🎶' : `Elige ${N_SLOTS - n} canción${N_SLOTS - n === 1 ? '' : 'es'} más`;
+  if (!nombreEl.value.trim() && n === N_SLOTS) btn.textContent = 'Pon tu nombre ☝️';
+}
+check();
+
+btn.onclick = async () => {
+  errEl.textContent = '';
+  const nombre = nombreEl.value.trim();
+  const canciones = picks.filter(Boolean).map(r => ({
+    trackName: r.trackName, artistName: r.artistName, collectionName: r.collectionName,
+    releaseDate: r.releaseDate, primaryGenreName: r.primaryGenreName,
+    trackTimeMillis: r.trackTimeMillis, artworkUrl100: r.artworkUrl100, trackId: r.trackId
+  }));
+  btn.disabled = true; btn.textContent = 'Enviando… 🎅';
+  try {
+    const res = await fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ nombre, dedicatoria: document.getElementById('dedicatoria').value.trim(), canciones }) });
+    const d = await res.json();
+    if (!d.ok) throw new Error(d.error || 'Error');
+    try { localStorage.setItem('pn_nombre', nombre); } catch {}
+    stopPreview();
+    document.getElementById('thxName').textContent = nombre.split(' ')[0];
+    document.getElementById('formCard').style.display = 'none';
+    document.getElementById('thanksCard').style.display = 'block';
+    burst();
+    if (d.stats) paintStats(d.stats);
+    document.getElementById('thanksCard').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  } catch (e) {
+    errEl.textContent = 'No se ha podido enviar. Revisa la conexión e inténtalo de nuevo.';
+    check();
+  }
+};
+
+document.getElementById('otra').onclick = () => {
+  for (let i = 0; i < N_SLOTS; i++) { picks[i] = null; renderSlot(i); }
+  document.getElementById('dedicatoria').value = '';
+  document.getElementById('thanksCard').style.display = 'none';
+  document.getElementById('formCard').style.display = 'block';
+  check();
+  document.getElementById('formCard').scrollIntoView({ behavior: 'smooth' });
+};
+
+function burst(){
+  const em = ['🎄','🎁','⭐','❄️','🎶','🎅','✨'];
+  for (let i = 0; i < 28; i++) {
+    const s = document.createElement('div');
+    s.textContent = em[i % em.length];
+    s.style.cssText = `position:fixed;left:${50 + (Math.random()*30-15)}%;top:45%;font-size:${18+Math.random()*18}px;z-index:99;pointer-events:none;transition:transform 1.4s cubic-bezier(.1,.7,.3,1),opacity 1.4s`;
+    document.body.appendChild(s);
+    requestAnimationFrame(() => { s.style.transform = `translate(${(Math.random()-.5)*520}px,${(Math.random()-.8)*480}px) rotate(${Math.random()*360}deg)`; s.style.opacity = 0; });
+    setTimeout(() => s.remove(), 1500);
+  }
+}
+
+/* ========= ESTADÍSTICAS ========= */
+function bars(list){
+  const max = Math.max(...list.map(x => x.n), 1);
+  return list.map((x,k) => `<div class="bar"><span class="pos">${k+1}</span>
+    <div class="track"><div class="fill" data-w="${Math.max(8, x.n/max*100)}"></div><span class="name">${esc(x.nombre || '—')}</span></div>
+    <span class="n">${x.n}</span></div>`).join('');
+}
+function paintStats(s){
+  const el = document.getElementById('stats');
+  if (!s || !s.canciones) { el.innerHTML = '<div class="nodata">Todavía no hay canciones. ¡Estrena tú la lista! 🎄</div>'; return; }
+  const maxD = Math.max(...s.decadas.map(d => d.n), 1);
+  const h = s.minutos >= 60 ? `${Math.floor(s.minutos/60)}h ${s.minutos%60}m` : `${s.minutos}m`;
+  el.innerHTML = `
+    <div class="kpis">
+      <div class="kpi"><b>${s.personas}</b><small>participantes</small></div>
+      <div class="kpi"><b>${s.unicas}</b><small>canciones</small></div>
+      <div class="kpi"><b>${h}</b><small>de música</small></div>
+    </div>
+    ${s.estilos.length ? `<div class="block stile"><h3>🎸 Estilos más pedidos</h3>${bars(s.estilos)}</div>` : ''}
+    ${s.artistas.length ? `<div class="block"><h3>🎤 Artistas más pedidos</h3>${bars(s.artistas)}</div>` : ''}
+    ${s.decadas.length ? `<div class="block"><h3>📼 Por décadas</h3><div class="decades">${s.decadas.map(d =>
+      `<div class="dec"><div class="col" data-h="${Math.max(6, d.n/maxD*100)}"><span>${d.n}</span></div><small>${esc(d.nombre)}</small></div>`).join('')}</div></div>` : ''}
+    <div class="facts">
+      ${s.anioMedio ? `<div class="fact">Año medio de la lista<b>${s.anioMedio}</b></div>` : ''}
+      ${s.masAntigua ? `<div class="fact">La más antigua es de<b>${s.masAntigua}</b></div>` : ''}
+      ${s.masNueva ? `<div class="fact">La más reciente es de<b>${s.masNueva}</b></div>` : ''}
+      <div class="fact">Coincidencias<b>${s.repetidas ? s.repetidas + (s.repetidas>1 ? ' canciones repetidas' : ' canción repetida') + ' 👀' : 'Ninguna (aún)'}</b></div>
+    </div>`;
+  requestAnimationFrame(() => setTimeout(() => {
+    el.querySelectorAll('.fill').forEach(f => f.style.width = f.dataset.w + '%');
+    el.querySelectorAll('.col').forEach(c => c.style.height = c.dataset.h + '%');
+  }, 60));
+  document.getElementById('upd').textContent = 'Actualizado ' + new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+}
+async function loadStats(){
+  try { const r = await fetch(API_URL); const d = await r.json(); if (d.ok) paintStats(d.stats); }
+  catch { document.getElementById('stats').innerHTML = '<div class="nodata">No se pueden cargar las estadísticas ahora mismo.</div>'; }
+}
+loadStats();
+</script>
+</body>
+</html>
